@@ -1,6 +1,5 @@
 package com.example.aularoomdatabase2023.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.aularoomdatabase2023.entity.User
 

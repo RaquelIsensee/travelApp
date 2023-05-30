@@ -43,7 +43,5 @@ class RegisterNewUserViewModel(private val userRepository: UserRepository): View
                 _toastMessage.emit(e.message?: "Unknown error")
             }
         }
-
     }
-
 }

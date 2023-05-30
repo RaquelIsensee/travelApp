@@ -69,7 +69,14 @@ fun ListScreen() {
                                 contentDescription = "",
                             )
                         }
-                  }
+                        Button(
+                            onClick = {
+
+                            }) {
+                            Text(text = "Book a new travel!")
+                        }
+
+                    }
 
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.aularoomdatabase2023.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +19,7 @@ class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
     private val _toastMessage = MutableSharedFlow<String>()
     val toastMessage = _toastMessage.asSharedFlow()
 
-
+//TODO: add trim
     fun validateLogin(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             val user = userRepository.findByName(name)

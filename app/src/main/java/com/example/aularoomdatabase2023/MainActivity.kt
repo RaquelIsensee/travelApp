@@ -24,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.aularoomdatabase2023.screen.FormScreen
 import com.example.aularoomdatabase2023.screen.ListScreen
 import com.example.aularoomdatabase2023.screen.LoginScreen
+import com.example.aularoomdatabase2023.screen.NewTravel
 import com.example.aularoomdatabase2023.ui.theme.AulaRoomDatabaseTheme
 import com.example.aularoomdatabase2023.viewModel.RegisterNewUserViewModel
 import com.example.aularoomdatabase2023.viewModel.RegisterNewUserViewModelFactory
@@ -101,6 +102,9 @@ fun MyApp() {
                             navController.navigateUp()
                         }
                     )
+                }
+                composable("new_travel") {
+                    NewTravel()
                 }
             }
         }

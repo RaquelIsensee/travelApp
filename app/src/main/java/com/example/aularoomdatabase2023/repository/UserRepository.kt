@@ -1,12 +1,10 @@
 package com.example.aularoomdatabase2023.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.example.aularoomdatabase2023.dao.UserDao
 import com.example.aularoomdatabase2023.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class UserRepository(private val userDao: UserDao) {
 
