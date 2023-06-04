@@ -32,26 +32,23 @@ class RegisterNewTravelViewModel(private val travelRepository: TravelRepository)
     val toastMessage = _toastMessage.asSharedFlow()
 
     private fun validateFields() {
-        destination = destination.isNotEmpty().toString()
+        isDestinationValid = destination.isNotEmpty()
         if (!isDestinationValid) {
             throw Exception("Destination is required")
         }
-        classification = classification.isNotEmpty().toString()
+        isClassificationValid = classification.isNotEmpty()
         if (!isClassificationValid) {
             throw Exception("Classification is required")
         }
-        begin = begin.isNotEmpty().toString()
+        isBeginValid = begin.isNotEmpty()
         if (!isBeginValid) {
             throw Exception("Start date is required")
         }
-        end = end.isNotEmpty().toString()
+        isEndValid = end.isNotEmpty()
         if (!isEndValid) {
             throw Exception("End date is required")
         }
-        if (begin <= end ) {
-            throw Exception("Started date should be before end date")
-        }
-        budget = budget.isNotEmpty().toString()
+        isBudgetValid = budget.isNotEmpty()
         if (!isBudgetValid) {
             throw Exception("Budget is required")
         }
