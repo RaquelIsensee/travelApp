@@ -72,7 +72,19 @@ fun MyApp() {
                 navController = navController,
                 startDestination = "list" ) {
                 composable("list") {
-                    ListScreen()
+                    ListScreen(
+                        onBack = {
+                        navController.navigateUp()
+                    },
+                    NewTravel = {
+                        navController.navigate("new_travel")
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = "new travel ok"
+                            )
+                        }
+                    }
+                    )
                 }
                 composable("login") {
                     LoginScreen(
@@ -111,12 +123,6 @@ fun MyApp() {
     }
 
 }
-
-
-
-
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {

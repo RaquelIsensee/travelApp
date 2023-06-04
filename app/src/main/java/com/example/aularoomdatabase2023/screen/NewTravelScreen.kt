@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun NewTravel()  {
+
     val application = LocalContext.current.applicationContext as Application
     val viewModel: RegisterNewTravelViewModel = viewModel(
         factory = NewTravelViewModelFactory(application)
@@ -30,8 +31,6 @@ fun NewTravel()  {
                 message = it,
                 duration = SnackbarDuration.Long
             )
-            // opção para mostrar as mensagens
-            // Toast.makeText(ctx, it, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -78,7 +77,7 @@ fun NewTravel()  {
                 value = viewModel.budget,
                 onValueChange = { viewModel.budget = it},
                 label = {
-                    Text(text = "Budget Date")
+                    Text(text = "Budget")
                 }
             )
             Row() {

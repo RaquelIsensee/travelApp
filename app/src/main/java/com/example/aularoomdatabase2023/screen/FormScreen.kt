@@ -71,7 +71,6 @@ fun FormScreen(onAfterSave: () -> Unit, onBack:() -> Unit) {
             )
             Row() {
                 Button(onClick = {
-
                     focusManager.clearFocus()
                     viewModel.registrar(onSuccess = {
                         onAfterSave()

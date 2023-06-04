@@ -25,7 +25,7 @@ import com.example.aularoomdatabase2023.viewModel.ListUserViewModel
 import com.example.aularoomdatabase2023.viewModel.ListUserViewModelFactory
 
 @Composable
-fun ListScreen() {
+fun ListScreen(NewTravel: () -> Unit, onBack:() -> Unit) {
     val application = LocalContext.current.applicationContext as Application
     val viewModel: ListUserViewModel = viewModel(
         factory = ListUserViewModelFactory (application)
@@ -71,7 +71,7 @@ fun ListScreen() {
                         }
                         Button(
                             onClick = {
-
+                                    NewTravel()
                             }) {
                             Text(text = "Book a new travel!")
                         }
