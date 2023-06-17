@@ -10,8 +10,8 @@ data class Travel(
     val classification: String,
     val begin: String,
     val end: String,
-    val budget: String,
-    val userId: Int,
+    val budget: Float,
+    val userId: Int
 ) {
 
 }
