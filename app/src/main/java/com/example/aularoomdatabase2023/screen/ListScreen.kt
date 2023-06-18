@@ -2,7 +2,6 @@ package com.example.aularoomdatabase2023.screen
 
 
 import android.app.Application
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 
@@ -18,34 +17,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.aularoomdatabase2023.entity.User
+import com.example.aularoomdatabase2023.viewModel.ListTravelModelFactory
+import com.example.aularoomdatabase2023.viewModel.ListTravelViewModel
 
-import com.example.aularoomdatabase2023.viewModel.ListUserViewModel
-import com.example.aularoomdatabase2023.viewModel.ListUserViewModelFactory
 
 @Composable
 fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit) {
 
     val application = LocalContext.current.applicationContext as Application
-    val viewModel: ListUserViewModel = viewModel(
-        factory = ListUserViewModelFactory (application)
+    val viewModel: ListTravelViewModel = viewModel(
+        factory = ListTravelModelFactory (application)
     )
 
-    Log.i("xxxxxx", userId.toString());
 
-    viewModel.loadAllUsers()
-//    viewModel.loadAllTravels(userId)
-
-    var openDialogRemove by remember { mutableStateOf(false) }
-    ConfirmDelete(openDialog = openDialogRemove,
-        onRemove = {
-            openDialogRemove = false
-            viewModel.deleteUser()
-        },
-        onClose = { openDialogRemove = false }
-    )
+   viewModel.loadAllTravels(userId)
 
 
     Column(Modifier.fillMaxSize()) {
@@ -56,7 +42,7 @@ fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit) {
             Text(text = "Book a new travel!")
         }
         LazyColumn() {
-            items(items = viewModel.users.value) {
+            items(items = viewModel.travels.value) {
                 Card(
                     elevation = 4.dp,
                     modifier = Modifier
@@ -66,25 +52,15 @@ fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit) {
                 ) {
                     Row( modifier = Modifier.padding(8.dp)) {
                         Text(
-                            text = "${it.name}",
+                            text = "${it.destination}",
                         )
                         Spacer(Modifier.weight(1f))
-                        IconButton(
-                            onClick = {
-                                viewModel.userForDelete = it
-                                openDialogRemove = true
-                            },
-                        ) {
-                            Icon(
-                                Icons.Default.Delete,
-                                contentDescription = "",
-                            )
-                        }
+
                         Button(
                             onClick = {
-
+                                //add expenses page to add to the travel budget
                             }) {
-                            Text(text = "Book a new travel!")
+                            Text(text = "Add expenses")
                         }
 
                     }
@@ -93,36 +69,6 @@ fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit) {
             }
         }
 
-        
     }
 
-}
-
-@Composable
-fun ConfirmDelete(openDialog: Boolean, onClose: () -> Unit, onRemove: () -> Unit) {
-    if (openDialog) {
-        AlertDialog(
-            onDismissRequest = {
-                onClose()
-            },
-            title = {
-                Text(text = "Confirm delete record?")
-            },
-            text = {
-                Column() {
-                    Text("Do you want delete this record?")
-                }
-            },
-            confirmButton = {
-                Button(onClick = { onRemove() }) {
-                    Text(text = "Yes")
-                }
-            },
-            dismissButton = {
-                Button(onClick = { onClose() }) {
-                    Text(text = "No")
-                }
-            },
-        )
-    }
 }

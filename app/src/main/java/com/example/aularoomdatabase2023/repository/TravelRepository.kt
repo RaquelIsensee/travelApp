@@ -2,6 +2,7 @@ package com.example.aularoomdatabase2023.repository
 
 import com.example.aularoomdatabase2023.dao.TravelDao
 import com.example.aularoomdatabase2023.entity.Travel
+import com.example.aularoomdatabase2023.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,4 +26,6 @@ class TravelRepository(private val travelDao: TravelDao) {
         suspend fun loadAllTravels(): List<Travel> {
             return travelDao.getAll()
         }
-    }
+        suspend fun findById(userId: Int): List<Travel> =
+            travelDao.findById(userId)
+        }

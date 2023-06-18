@@ -32,8 +32,7 @@ fun LoginScreen(onAfterLogin: (Int) -> Unit, onBack:() -> Unit) {
                 message = it,
                 duration = SnackbarDuration.Long
             )
-            // opção para mostrar as mensagens
-            // Toast.makeText(ctx, it, Toast.LENGTH_SHORT).show()
+
         }
     }
 

@@ -22,4 +22,7 @@ import com.example.aularoomdatabase2023.entity.Travel
         @Query("select * from travel t where t.destination = :destination")
         suspend fun findByDestination(destination: String): Travel
 
+        @Query("select * from travel t where t.userId = :userId")
+        suspend fun findById(userId: Int):  List<Travel>
+        
 }
