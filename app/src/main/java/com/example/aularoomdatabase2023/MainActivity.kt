@@ -16,9 +16,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.aularoomdatabase2023.screen.ExpenseListScreen
 import com.example.aularoomdatabase2023.screen.FormScreen
 import com.example.aularoomdatabase2023.screen.ListScreen
 import com.example.aularoomdatabase2023.screen.LoginScreen
+import com.example.aularoomdatabase2023.screen.NewExpense
 import com.example.aularoomdatabase2023.screen.NewTravel
 import com.example.aularoomdatabase2023.ui.theme.AulaRoomDatabaseTheme
 import kotlinx.coroutines.launch
@@ -91,6 +93,40 @@ fun MyApp() {
                             userId,
                             OpenNewTravel = { userId ->
                                 navController.navigate("new_travel/$userId")
+                            },
+                            listExpenses = {travelId ->
+                            navController.navigate("list_expense/$travelId")
+
+                            }
+                        )
+                    }
+                }
+                composable(
+                    "list_expense/{travelId}",
+                            arguments = listOf(navArgument("travelId") { type = NavType.StringType })
+                ){
+                    val param = it.arguments?.getString("travelId")
+                    val travelId = param?.toInt()
+                    if (travelId != null) {
+                        ExpenseListScreen(
+                            travelId,
+                            OpenNewExpense = {travelId ->
+                                navController.navigate("new_expense/$travelId")
+                            }
+                        )
+                    }
+                }
+                composable(
+                    "new_expense/{travelId}",
+                    arguments = listOf(navArgument("travelId") { type = NavType.StringType })
+                ) {
+                    val param = it.arguments?.getString("travelId")
+                    val travelId = param?.toInt()
+                    if (travelId != null) {
+                        NewExpense(
+                            travelId,
+                            onBack = {
+                                navController.navigateUp()
                             }
                         )
                     }

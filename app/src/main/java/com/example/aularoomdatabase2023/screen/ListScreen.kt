@@ -23,7 +23,7 @@ import com.example.aularoomdatabase2023.viewModel.ListTravelViewModel
 
 
 @Composable
-fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit) {
+fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit, listExpenses:(Int) -> Unit) {
 
     val application = LocalContext.current.applicationContext as Application
     val viewModel: ListTravelViewModel = viewModel(
@@ -58,7 +58,7 @@ fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit) {
 
                         Button(
                             onClick = {
-                                //add expenses page to add to the travel budget
+                                listExpenses(it.id)
                             }) {
                             Text(text = "Add expenses")
                         }

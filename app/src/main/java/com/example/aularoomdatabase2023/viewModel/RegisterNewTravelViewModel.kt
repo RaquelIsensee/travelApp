@@ -24,7 +24,6 @@ class RegisterNewTravelViewModel(private val travelRepository: TravelRepository)
     var isClassificationValid by mutableStateOf(true)
     var isBeginValid by mutableStateOf(true)
     var isEndValid by mutableStateOf(true)
-    var isBudgetValid by mutableStateOf(true)
 
 
     private val _toastMessage = MutableSharedFlow<String>()
