@@ -43,7 +43,7 @@ fun LoginScreen(onAfterLogin: (Int) -> Unit, onBack:() -> Unit) {
     Scaffold(scaffoldState = scaffoldState ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(paddingValues = it),
-            //verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {

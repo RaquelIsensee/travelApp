@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.aularoomdatabase2023.screen.AboutScreen
 import com.example.aularoomdatabase2023.screen.ExpenseListScreen
 import com.example.aularoomdatabase2023.screen.FormScreen
 import com.example.aularoomdatabase2023.screen.ListScreen
@@ -58,6 +59,9 @@ fun MyApp() {
                 Button(onClick = { navController.navigate("login") }) {
                     Text(text = "Login")
                 }
+                Button(onClick = { navController.navigate("about") }) {
+                    Text(text = "About")
+                }
             }
         }
     ) {
@@ -80,6 +84,9 @@ fun MyApp() {
                             }
                         }
                     )
+                }
+                composable("about") {
+                    AboutScreen()
                 }
 
                 composable(

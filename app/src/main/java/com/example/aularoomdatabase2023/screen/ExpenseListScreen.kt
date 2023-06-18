@@ -30,7 +30,10 @@ fun ExpenseListScreen(travelId: Int, OpenNewExpense: (Int) -> Unit) {
 
 
     viewModel.loadAllExpenses(travelId)
-
+    var total: Float = 0.00f
+    for(expense in viewModel.expenses.value) {
+        total = expense.expense + total
+    }
 
     Column(Modifier.fillMaxSize()) {
         Button(
@@ -53,12 +56,17 @@ fun ExpenseListScreen(travelId: Int, OpenNewExpense: (Int) -> Unit) {
                             text = "${it.name}",
                         )
                         Spacer(Modifier.weight(1f))
+                        Text(
+                            text = "${it.expense}",
+                        )
 
                     }
-
                 }
             }
         }
+        Text(
+            text = "Total: " + total
+        )
 
     }
 }
