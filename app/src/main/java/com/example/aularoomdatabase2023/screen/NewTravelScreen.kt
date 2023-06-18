@@ -25,7 +25,7 @@ import java.util.Calendar
 import java.util.Date
 
 @Composable
-fun NewTravel()  {
+fun NewTravel(userId: Int, onBack: () -> Unit)  {
 
     val application = LocalContext.current.applicationContext as Application
     val viewModel: RegisterNewTravelViewModel = viewModel(
@@ -142,17 +142,11 @@ fun NewTravel()  {
                 },
                 modifier = Modifier.onFocusChanged { b -> openDatePicker(b.isFocused, "end") }
             )
-            OutlinedTextField(
-                value = viewModel.budget,
-                onValueChange = { viewModel.budget = it},
-                label = {
-                    Text(text = "Budget")
-                }
-            )
             Row() {
                 Button(onClick = {
                     focusManager.clearFocus()
-                    viewModel.registerNewTravel(onSuccess = {
+                    viewModel.registerNewTravel(userId, onSuccess = {
+                        onBack()
                     })
                 }) {
                     Text(text = "New travel!")

@@ -1,8 +1,6 @@
 package com.example.aularoomdatabase2023.screen
 
 import android.app.Application
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -20,7 +18,7 @@ import com.example.aularoomdatabase2023.viewModel.RegisterNewUserViewModelFactor
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun LoginScreen(onAfterLogin:()->Unit, onBack:() -> Unit) {
+fun LoginScreen(onAfterLogin: (Int) -> Unit, onBack:() -> Unit) {
     val application = LocalContext.current.applicationContext as Application
     val viewModel: LoginViewModel = viewModel(
         factory = LoginViewModelFactory(application)
@@ -46,7 +44,7 @@ fun LoginScreen(onAfterLogin:()->Unit, onBack:() -> Unit) {
     Scaffold(scaffoldState = scaffoldState ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(paddingValues = it),
-            verticalArrangement = Arrangement.Center,
+            //verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
@@ -68,9 +66,9 @@ fun LoginScreen(onAfterLogin:()->Unit, onBack:() -> Unit) {
             Row() {
                 Button(onClick = {
                     focusManager.clearFocus()
-                    viewModel.validateLogin(onResult = {
-                        if (it) {
-                            onAfterLogin()
+                    viewModel.validateLogin(onResult = {userId ->
+                        if (userId > 0) {
+                            onAfterLogin(userId)
                         }
                     })
                 }) {

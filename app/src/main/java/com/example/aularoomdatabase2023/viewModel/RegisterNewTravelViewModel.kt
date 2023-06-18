@@ -17,7 +17,6 @@ class RegisterNewTravelViewModel(private val travelRepository: TravelRepository)
     var classification by mutableStateOf("")
     var begin by mutableStateOf("")
     var end by mutableStateOf("")
-    var budget by mutableStateOf("")
     var userId = Int
 
 
@@ -48,17 +47,13 @@ class RegisterNewTravelViewModel(private val travelRepository: TravelRepository)
         if (!isEndValid) {
             throw Exception("End date is required")
         }
-        isBudgetValid = budget.isNotEmpty()
-        if (!isBudgetValid) {
-            throw Exception("Budget is required")
-        }
 
     }
 
-    fun registerNewTravel(onSuccess: () -> Unit) {
+    fun registerNewTravel(userID: Int, onSuccess: () -> Unit) {
         try {
             validateFields()
-            val newTravel = Travel(destination = destination, classification = classification, begin = begin, end = end, budget = budget, userId = 1)
+            val newTravel = Travel(destination = destination, classification = classification, begin = begin, end = end, userId = userID)
             travelRepository.addTravel(newTravel)
             onSuccess()
         }

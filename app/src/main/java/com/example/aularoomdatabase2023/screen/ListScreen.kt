@@ -2,6 +2,7 @@ package com.example.aularoomdatabase2023.screen
 
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 
@@ -25,13 +26,17 @@ import com.example.aularoomdatabase2023.viewModel.ListUserViewModel
 import com.example.aularoomdatabase2023.viewModel.ListUserViewModelFactory
 
 @Composable
-fun ListScreen(NewTravel: () -> Unit, onBack:() -> Unit) {
+fun ListScreen(userId: Int, OpenNewTravel: (Int) -> Unit) {
+
     val application = LocalContext.current.applicationContext as Application
     val viewModel: ListUserViewModel = viewModel(
         factory = ListUserViewModelFactory (application)
     )
 
+    Log.i("xxxxxx", userId.toString());
+
     viewModel.loadAllUsers()
+//    viewModel.loadAllTravels(userId)
 
     var openDialogRemove by remember { mutableStateOf(false) }
     ConfirmDelete(openDialog = openDialogRemove,
@@ -44,6 +49,12 @@ fun ListScreen(NewTravel: () -> Unit, onBack:() -> Unit) {
 
 
     Column(Modifier.fillMaxSize()) {
+        Button(
+            onClick = {
+                OpenNewTravel(userId)
+            }) {
+            Text(text = "Book a new travel!")
+        }
         LazyColumn() {
             items(items = viewModel.users.value) {
                 Card(
@@ -71,7 +82,7 @@ fun ListScreen(NewTravel: () -> Unit, onBack:() -> Unit) {
                         }
                         Button(
                             onClick = {
-                                    NewTravel()
+
                             }) {
                             Text(text = "Book a new travel!")
                         }

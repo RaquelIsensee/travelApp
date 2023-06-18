@@ -1,34 +1,26 @@
 package com.example.aularoomdatabase2023
 
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.aularoomdatabase2023.screen.FormScreen
 import com.example.aularoomdatabase2023.screen.ListScreen
 import com.example.aularoomdatabase2023.screen.LoginScreen
 import com.example.aularoomdatabase2023.screen.NewTravel
 import com.example.aularoomdatabase2023.ui.theme.AulaRoomDatabaseTheme
-import com.example.aularoomdatabase2023.viewModel.RegisterNewUserViewModel
-import com.example.aularoomdatabase2023.viewModel.RegisterNewUserViewModelFactory
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -70,29 +62,15 @@ fun MyApp() {
         Column(modifier = Modifier.padding(paddingValues = it)) {
             NavHost(
                 navController = navController,
-                startDestination = "list" ) {
-                composable("list") {
-                    ListScreen(
-                        onBack = {
-                        navController.navigateUp()
-                    },
-                    NewTravel = {
-                        navController.navigate("new_travel")
-                        coroutineScope.launch {
-                            scaffoldState.snackbarHostState.showSnackbar(
-                                message = "new travel ok"
-                            )
-                        }
-                    }
-                    )
-                }
+                startDestination = "login" ) {
+
                 composable("login") {
                     LoginScreen(
                         onBack = {
                             navController.navigateUp()
                         },
-                        onAfterLogin = {
-                            navController.navigate("list")
+                        onAfterLogin = { userId ->
+                            navController.navigate("list/$userId")
                             coroutineScope.launch {
                                 scaffoldState.snackbarHostState.showSnackbar(
                                     message = "Login ok"
@@ -101,6 +79,39 @@ fun MyApp() {
                         }
                     )
                 }
+
+                composable(
+                    "list/{userId}",
+                    arguments = listOf(navArgument("userId") { type = NavType.StringType })
+                ) {
+                    val param = it.arguments?.getString("userId")
+                    val userId = param?.toInt()
+                    if (userId != null) {
+                        ListScreen(
+                            userId,
+                            OpenNewTravel = { userId ->
+                                navController.navigate("new_travel/$userId")
+                            }
+                        )
+                    }
+                }
+
+                composable(
+                    "new_travel/{userId}",
+                    arguments = listOf(navArgument("userId") { type = NavType.StringType })
+                ) {
+                    val param = it.arguments?.getString("userId")
+                    val userId = param?.toInt()
+                    if (userId != null) {
+                        NewTravel(
+                            userId,
+                            onBack = {
+                                navController.navigateUp()
+                            }
+                        )
+                    }
+                }
+
                 composable("form") {
                     FormScreen(onAfterSave = {
                         navController.navigateUp()
@@ -114,9 +125,6 @@ fun MyApp() {
                             navController.navigateUp()
                         }
                     )
-                }
-                composable("new_travel") {
-                    NewTravel()
                 }
             }
         }

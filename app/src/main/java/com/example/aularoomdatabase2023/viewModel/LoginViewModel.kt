@@ -20,11 +20,13 @@ class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
     val toastMessage = _toastMessage.asSharedFlow()
 
 //TODO: add trim
-    fun validateLogin(onResult: (Boolean) -> Unit) {
+    fun validateLogin(onResult: (Int) -> Unit) {
         viewModelScope.launch {
             val user = userRepository.findByName(name)
             val result = user != null && user.password == password
-            onResult(result)
+            if (user != null) {
+                onResult(user.id)
+            }
             if (!result )
                 _toastMessage.emit("Invalid login")
         }
